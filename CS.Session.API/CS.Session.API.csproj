@@ -10,8 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Session.Domain\CS.Session.Domain.csproj" />
+    <ProjectReference Include="..\CS.Session.Infrastructure\CS.Session.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

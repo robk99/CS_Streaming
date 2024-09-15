@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Net;
 using System.Net.NetworkInformation;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CS.Session.API.Controllers
 {

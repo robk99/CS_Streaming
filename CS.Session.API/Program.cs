@@ -1,13 +1,8 @@
-using StackExchange.Redis;
+using CS.Session.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-{
-    var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Cache"), true);
-    return ConnectionMultiplexer.Connect(configuration);
-});
-
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 
 var app = builder.Build();
