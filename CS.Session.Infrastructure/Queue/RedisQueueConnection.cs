@@ -3,7 +3,7 @@ using StackExchange.Redis;
 
 namespace CS.Session.Infrastructure.Queue
 {
-    internal class RedisQueueConnection : IRedisConnection
+    public class RedisQueueConnection : IRedisConnection
     {
         private readonly IConnectionMultiplexer _connectionMultiplexer;
 

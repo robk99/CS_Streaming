@@ -4,6 +4,14 @@ using System.Net.NetworkInformation;
 
 namespace CS.Session.API.Controllers
 {
+
+    public class ResponseDto
+    {
+        public object? Result { get; set; }
+        public bool IsSuccess { get; set; } = true;
+        public string Message { get; set; } = "";
+    }
+
     [ApiController]
     [Route("api/session")]
     public class PingController : ControllerBase
@@ -20,8 +28,10 @@ namespace CS.Session.API.Controllers
 
         [HttpGet("Ping/{ip}")]
 
-        public async Task Ping(string ip)
+        public async Task<ResponseDto> Ping(string ip)
         {
+            ResponseDto response = new();
+
             try
             {
                 IPAddress ipAddress;
@@ -37,7 +47,8 @@ namespace CS.Session.API.Controllers
 
                 Ping ping = new Ping();
 
-                Console.WriteLine($"Ping started at: {DateTime.Now}");
+                var startMessage = $"Ping started at: {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff")}";
+                Console.WriteLine(startMessage);
                 PingReply result = await ping.SendPingAsync(ipAddress, 5000);
                 if (result.Status == IPStatus.Success)
                 {
@@ -48,13 +59,23 @@ namespace CS.Session.API.Controllers
                 {
                     Console.WriteLine("Ping failed!");
                     Console.WriteLine($"Response: {result.Status}");
+                    response.IsSuccess = false;
                 }
-                Console.WriteLine($"Ping ended at: {DateTime.Now}");
+                var endMessage = $"Ping ended at: {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff")}";
+                Console.WriteLine(endMessage);
+
+                response.Message = result.Status.ToString();
+                response.Result = new { start = startMessage, end = endMessage };
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                response.Message = "Exception";
+                response.Result = new { exception = ex.Message };
+                response.IsSuccess = false;
             }
+
+            return response;
         }
     }
 }

@@ -1,13 +1,24 @@
 version: '3'
 services:
+  cs.session.api:
+    container_name: session.api
+    build:
+      context: .
+      dockerfile: CS.Session.API/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+
   redis.cache:
     image: redis:latest
+    container_name: redis.cache
     restart: always
     ports:
       - "6379:6379"
 
   redis.queue:
     image: redis:latest
+    container_name: redis.queue
     restart: always
     ports:
       - "6380:6379"

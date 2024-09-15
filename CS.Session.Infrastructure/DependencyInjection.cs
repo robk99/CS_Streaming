@@ -1,5 +1,4 @@
-﻿using CS.Session.Infrastructure.Abstractions;
-using CS.Session.Infrastructure.Cache;
+﻿using CS.Session.Infrastructure.Cache;
 using CS.Session.Infrastructure.Queue;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +16,7 @@ namespace CS.Session.Infrastructure
                 var configuration = ConfigurationOptions.Parse(redisCacheConnectionString, true);
                 return ConnectionMultiplexer.Connect(configuration);
             });
-            services.AddSingleton<IRedisConnection, RedisCacheConnection>();
+            services.AddSingleton<RedisCacheConnection>();
 
             string? redisQueueConnectionString = configuration.GetConnectionString("Queue");
             services.AddSingleton<IConnectionMultiplexer>(sp =>
@@ -25,7 +24,7 @@ namespace CS.Session.Infrastructure
                 var configuration = ConfigurationOptions.Parse(redisQueueConnectionString, true);
                 return ConnectionMultiplexer.Connect(configuration);
             });
-            services.AddSingleton<IRedisConnection, RedisQueueConnection>();
+            services.AddSingleton<RedisQueueConnection>();
 
             services.AddScoped<RedisCacheService>();
             services.AddScoped<RedisQueueService>();

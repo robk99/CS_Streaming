@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CS.Session.Infrastructure.Abstractions
+﻿namespace CS.Session.Infrastructure.Abstractions
 {
-    internal interface IRedisService
+    public interface IRedisService
     {
+        public Task SetAsync(string key, string value);
+
+        public Task<string> GetAsync(string key);
+
+        public Task SetHashAsync<T>(string key, T obj) where T : class;
+
+        public Task<T> GetHashAsync<T>(string key) where T : class, new();
     }
 }

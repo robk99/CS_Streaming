@@ -1,25 +1,19 @@
 ﻿using CS.Session.Infrastructure.Abstractions;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS.Session.Infrastructure.Queue
 {
     public class RedisQueueService: IRedisService
     {
-        private readonly ConnectionMultiplexer _redis;
+        private readonly RedisQueueConnection _redisConnection;
         private readonly IDatabase _db;
 
-        public RedisQueueService(string redisConnectionString)
+        public RedisQueueService(RedisQueueConnection redisConnection)
         {
-            _redis = ConnectionMultiplexer.Connect(redisConnectionString);
-            _db = _redis.GetDatabase();
+            _redisConnection = redisConnection;
+            _db = _redisConnection.GetDatabase();
         }
 
-        // Simple Get/Set
         public async Task SetAsync(string key, string value)
         {
             await _db.StringSetAsync(key, value);
@@ -30,7 +24,6 @@ namespace CS.Session.Infrastructure.Queue
             return await _db.StringGetAsync(key);
         }
 
-        // Hash Get/Set (with object destructuring)
         public async Task SetHashAsync<T>(string key, T obj) where T : class
         {
             var hashEntries = ObjectToHashEntries(obj);
@@ -43,7 +36,6 @@ namespace CS.Session.Infrastructure.Queue
             return HashEntriesToObject<T>(hashEntries);
         }
 
-        // Helper method: Convert object to hash entries
         private HashEntry[] ObjectToHashEntries<T>(T obj)
         {
             var properties = typeof(T).GetProperties();
@@ -58,7 +50,6 @@ namespace CS.Session.Infrastructure.Queue
             return hashEntries;
         }
 
-        // Helper method: Convert hash entries to object
         private T HashEntriesToObject<T>(HashEntry[] hashEntries) where T : new()
         {
             var obj = new T();
@@ -66,8 +57,21 @@ namespace CS.Session.Infrastructure.Queue
 
             foreach (var property in properties)
             {
-                var hashValue = Array.Find(hashEntries, h => h.Name == property.Name).Value;
-                property.SetValue(obj, Convert.ChangeType(hashValue.ToString(), property.PropertyType));
+                var hashEntry = Array.Find(hashEntries, h => h.Name == property.Name);
+
+                if (hashEntry.Name.HasValue)
+                {
+                    var value = hashEntry.Value.ToString();
+                    if (property.PropertyType.IsEnum)
+                    {
+                        var enumValue = Enum.Parse(property.PropertyType, value);
+                        property.SetValue(obj, enumValue);
+                    }
+                    else
+                    {
+                        property.SetValue(obj, Convert.ChangeType(value, property.PropertyType));
+                    }
+                }
             }
 
             return obj;
