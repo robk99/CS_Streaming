@@ -1,6 +1,12 @@
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Cache"), true);
+    return ConnectionMultiplexer.Connect(configuration);
+});
 
 builder.Services.AddControllers();
 
