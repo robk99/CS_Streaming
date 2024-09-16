@@ -1,4 +1,4 @@
-﻿using CS.Session.Infrastructure.Abstractions;
+﻿using CS.Session.Infrastructure.Interfaces;
 using StackExchange.Redis;
 
 namespace CS.Session.Infrastructure.Queue
