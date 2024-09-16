@@ -10,25 +10,24 @@ namespace CS.Session.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            string? redisCacheConnectionString = configuration.GetConnectionString("Cache");
-            services.AddSingleton<IConnectionMultiplexer>(sp =>
-            {
-                var configuration = ConfigurationOptions.Parse(redisCacheConnectionString, true);
-                return ConnectionMultiplexer.Connect(configuration);
-            });
-            services.AddSingleton<RedisCacheConnection>();
-
-            string? redisQueueConnectionString = configuration.GetConnectionString("Queue");
-            services.AddSingleton<IConnectionMultiplexer>(sp =>
-            {
-                var configuration = ConfigurationOptions.Parse(redisQueueConnectionString, true);
-                return ConnectionMultiplexer.Connect(configuration);
-            });
-            services.AddSingleton<RedisQueueConnection>();
+            services.AddRedisConnection(configuration, "Cache", typeof(RedisCacheConnection));
+            services.AddRedisConnection(configuration, "Queue", typeof(RedisQueueConnection));
 
             services.AddScoped<RedisCacheService>();
             services.AddScoped<RedisQueueService>();
 
+            return services;
+        }
+
+        private static IServiceCollection AddRedisConnection(this IServiceCollection services, IConfiguration configuration, string connectionName, Type connectionType)
+        {
+            string? connectionString = configuration.GetConnectionString(connectionName);
+            services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var configuration = ConfigurationOptions.Parse(connectionString, true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+            services.AddSingleton(connectionType);
 
             return services;
         }
