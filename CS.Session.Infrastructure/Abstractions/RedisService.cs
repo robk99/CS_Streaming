@@ -3,7 +3,7 @@ using StackExchange.Redis;
 
 namespace CS.Session.Infrastructure.Abstractions
 {
-    public abstract class RedisService: IRedisService
+    public abstract class RedisService : IRedisService
     {
         public IRedisConnection _redisConnection;
         public IDatabase _db;
@@ -14,14 +14,26 @@ namespace CS.Session.Infrastructure.Abstractions
             _db = _redisConnection.GetDatabase();
         }
 
-        public async Task SetAsync(string key, string value)
-        {
-            await _db.StringSetAsync(key, value);
-        }
-
+        #region GET
         public async Task<string> GetAsync(string key)
         {
             return await _db.StringGetAsync(key);
+        }
+
+        public async Task<T?> GetHashAsync<T>(string key) where T : class, new()
+        {
+            var hashEntries = await _db.HashGetAllAsync(key);
+            if (hashEntries.Length == 0) return null;
+
+            return HashEntriesToObject<T>(hashEntries);
+        }
+
+        #endregion
+
+        #region SET
+        public async Task SetAsync(string key, string value)
+        {
+            await _db.StringSetAsync(key, value);
         }
 
         public async Task SetHashAsync<T>(string key, T obj) where T : class
@@ -29,13 +41,16 @@ namespace CS.Session.Infrastructure.Abstractions
             var hashEntries = ObjectToHashEntries(obj);
             await _db.HashSetAsync(key, hashEntries);
         }
+        #endregion
 
-        public async Task<T> GetHashAsync<T>(string key) where T : class, new()
+        #region DELETE
+        public async Task DeleteAsync(string key)
         {
-            var hashEntries = await _db.HashGetAllAsync(key);
-            return HashEntriesToObject<T>(hashEntries);
+            await _db.KeyDeleteAsync(key);
         }
+        #endregion
 
+        #region Helper methods
         private HashEntry[] ObjectToHashEntries<T>(T obj)
         {
             var properties = typeof(T).GetProperties();
@@ -76,5 +91,7 @@ namespace CS.Session.Infrastructure.Abstractions
 
             return obj;
         }
+        #endregion
     }
+
 }

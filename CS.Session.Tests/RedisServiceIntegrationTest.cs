@@ -14,6 +14,7 @@ namespace CS.Session.Tests
             _fixture = fixture;
         }
 
+        #region STRINGS
         [Theory]
         [InlineData("cache")]
         [InlineData("queue")]
@@ -31,9 +32,32 @@ namespace CS.Session.Tests
 
             // Assert
             Assert.Equal(value, retrievedValue);
+
+            // Clean up (delete the key)
+            await redisService.DeleteAsync(key);
         }
 
+        [Theory]
+        [InlineData("cache")]
+        [InlineData("queue")]
+        public async Task SetAndDeleteValue_ShouldDeleteValue(string serviceType)
+        {
+            // Arrange
+            RedisService redisService = GetRedisService(serviceType);
+            string key = "test-key-1";
+            string value = "value1";
 
+            // Act
+            await redisService.SetAsync(key, value);
+            await redisService.DeleteAsync(key);
+            var retrievedValue = await redisService.GetAsync(key);
+
+            // Assert
+            Assert.Null(retrievedValue);
+        }
+        #endregion
+
+        #region HASHES
         [Theory]
         [InlineData("cache")]
         [InlineData("queue")]
@@ -58,8 +82,38 @@ namespace CS.Session.Tests
             Assert.Equal(obj.State, retrievedObj.State);
             Assert.Equal(obj.LastPingTimestamp, retrievedObj.LastPingTimestamp);
             Assert.Equal(obj.UserIP, retrievedObj.UserIP);
+
+            // Clean up (delete the key)
+            await redisService.DeleteAsync(key);
         }
 
+
+        [Theory]
+        [InlineData("cache")]
+        [InlineData("queue")]
+        public async Task SetAndDeleteHash_ShouldDeleteHash(string serviceType)
+        {
+            // Arrange
+            RedisService redisService = GetRedisService(serviceType);
+            string key = "session:9876";
+            var obj = new SessionDto
+            {
+                State = SessionState.PAUSE,
+                LastPingTimestamp = 1726428892,
+                UserIP = "8.8.8.8"
+            };
+
+            // Act
+            await redisService.SetHashAsync<SessionDto>(key, obj);
+            await redisService.DeleteAsync(key);
+            var retrievedObj = await redisService.GetHashAsync<SessionDto>(key);
+
+            // Assert
+            Assert.Null(retrievedObj);
+        }
+        #endregion
+
+        #region Helper methods
         private RedisService GetRedisService(string serviceType)
         {
             switch (serviceType)
@@ -74,5 +128,6 @@ namespace CS.Session.Tests
                     throw new Exception("serviceType not found");
             }
         }
+        #endregion
     }
 }
