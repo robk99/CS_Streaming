@@ -4,8 +4,11 @@ using StackExchange.Redis;
 
 namespace CS.Session.Tests.Fixtures
 {
-    public class RedisServiceFixture : IDisposable
+    public class RedisServiceFixture : IAsyncDisposable
     {
+        private RedisCacheConnection redisCacheConnection;
+        private RedisQueueConnection redisQueueConnection;
+
         public RedisCacheService RedisCacheService { get; private set; }
         public RedisQueueService RedisQueueService { get; private set; }
 
@@ -14,17 +17,19 @@ namespace CS.Session.Tests.Fixtures
         {
             // TODO: This shouldn't be hardcoded like this but rather read from secrets / API's appsettings.json
             string cacheConnectionString = "localhost:6379";
-            var redisCacheConnection = new RedisCacheConnection(ConnectionMultiplexer.Connect(cacheConnectionString));
+            redisCacheConnection = new RedisCacheConnection(ConnectionMultiplexer.Connect(cacheConnectionString));
             RedisCacheService = new RedisCacheService(redisCacheConnection);
 
             // TODO: This shouldn't be hardcoded like this but rather read from secrets / API's appsettings.json
             string queueConnectionString = "localhost:6380";
-            var redisQueueConnection = new RedisQueueConnection(ConnectionMultiplexer.Connect(queueConnectionString));
+            redisQueueConnection = new RedisQueueConnection(ConnectionMultiplexer.Connect(queueConnectionString));
             RedisQueueService = new RedisQueueService(redisQueueConnection);
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
+            await redisCacheConnection.Dispose();
+            await redisQueueConnection.Dispose();
         }
     }
 }

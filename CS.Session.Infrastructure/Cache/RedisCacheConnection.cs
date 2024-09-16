@@ -13,5 +13,6 @@ namespace CS.Session.Infrastructure.Cache
         }
 
         public IDatabase GetDatabase() => _connectionMultiplexer.GetDatabase();
+        public async Task Dispose() => await _connectionMultiplexer.DisposeAsync();
     }
 }

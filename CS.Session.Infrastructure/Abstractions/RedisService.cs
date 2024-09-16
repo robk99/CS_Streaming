@@ -50,6 +50,13 @@ namespace CS.Session.Infrastructure.Abstractions
         }
         #endregion
 
+        #region DISPOSE
+        public async void DisposeConnection()
+        {
+            await _redisConnection.Dispose();
+        }
+        #endregion
+
         #region Helper methods
         private HashEntry[] ObjectToHashEntries<T>(T obj)
         {
