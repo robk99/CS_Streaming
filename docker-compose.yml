@@ -9,16 +9,16 @@ services:
       - "5000:8080"
       - "5001:8081"
 
-  redis.cache:
+  cs.session.redis.cache:
     image: redis:latest
-    container_name: redis.cache
+    container_name: session.redis.cache
     restart: always
     ports:
       - "6379:6379"
 
-  redis.queue:
+  cs.session.redis.queue:
     image: redis:latest
-    container_name: redis.queue
+    container_name: session.redis.queue
     restart: always
     ports:
       - "6380:6379"
