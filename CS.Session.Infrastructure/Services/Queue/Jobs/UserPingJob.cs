@@ -3,7 +3,6 @@ using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Dtos;
 using CS.Session.Infrastructure.Services.Cache;
 using CS.Session.Infrastructure.Utils;
-using Hangfire;
 using System.Net.NetworkInformation;
 
 namespace CS.Session.Infrastructure.Services.Queue.Jobs

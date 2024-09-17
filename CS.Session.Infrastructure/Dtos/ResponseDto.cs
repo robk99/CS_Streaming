@@ -1,8 +1,4 @@
-﻿
-using System.Net;
-using System.Net.NetworkInformation;
-
-namespace CS.Session.Infrastructure.Dtos
+﻿namespace CS.Session.Infrastructure.Dtos
 {
     public class ResponseDto
     {
