@@ -1,18 +1,15 @@
-﻿using CS.Session.Infrastructure.Interfaces;
+﻿using CS.Session.Infrastructure.Abstractions;
 using StackExchange.Redis;
 
-namespace CS.Session.Infrastructure.Abstractions
+namespace CS.Session.Infrastructure.Services.Redis
 {
+    /// <summary>
+    /// TODO: All methods to return a value and handle if Transaction execution failed
+    /// </summary>
     public abstract class RedisService : IRedisService
     {
         public IRedisConnection _redisConnection;
         public IDatabase _db;
-
-        public RedisService(IRedisConnection redisConnection)
-        {
-            _redisConnection = redisConnection;
-            _db = _redisConnection.GetDatabase();
-        }
 
         #region GET
         public async Task<string> GetAsync(string key)

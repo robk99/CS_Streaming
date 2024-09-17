@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Session.API", "CS.Sessio
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DA111158-7C18-4CB5-8BAC-C492E90FD70A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Session.Domain", "CS.Session.Domain\CS.Session.Domain.csproj", "{255D7886-7808-4271-95ED-68827E52E271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Session.Domain", "CS.Session.Domain\CS.Session.Domain.csproj", "{255D7886-7808-4271-95ED-68827E52E271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Session.Infrastructure", "CS.Session.Infrastructure\CS.Session.Infrastructure.csproj", "{41C259A1-3F56-47E6-BD04-E34F49B89E7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Session.Infrastructure", "CS.Session.Infrastructure\CS.Session.Infrastructure.csproj", "{41C259A1-3F56-47E6-BD04-E34F49B89E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Session.Tests", "CS.Session.Tests\CS.Session.Tests.csproj", "{526E90A0-5A0E-4667-BA26-6A49AB854BA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Session.Tests", "CS.Session.Tests\CS.Session.Tests.csproj", "{526E90A0-5A0E-4667-BA26-6A49AB854BA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

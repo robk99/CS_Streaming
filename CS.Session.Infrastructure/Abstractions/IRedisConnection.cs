@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace CS.Session.Infrastructure.Interfaces
+namespace CS.Session.Infrastructure.Abstractions
 {
     public interface IRedisConnection
     {

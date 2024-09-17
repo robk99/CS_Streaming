@@ -1,6 +1,7 @@
 using CS.Session.Domain.Session;
-using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Dtos;
+using CS.Session.Infrastructure.Services.Redis;
+using CS.Session.Infrastructure.Utils;
 using CS.Session.Tests.Fixtures;
 
 namespace CS.Session.Tests
@@ -66,12 +67,12 @@ namespace CS.Session.Tests
             RedisService redisService = GetRedisService(serviceType);
 
             // Arrange
-            string key = "session:1234";
+            string key = SessionUtil.GetRedisKey("8.8.8.8");
             var obj = new SessionDto
             {
                 State = SessionState.PAUSE,
                 LastPingTimestamp = 1726428892,
-                UserIP = "8.8.8.8"
+                Id = "1-2-3"
             };
 
             // Act
@@ -81,7 +82,7 @@ namespace CS.Session.Tests
             // Assert
             Assert.Equal(obj.State, retrievedObj.State);
             Assert.Equal(obj.LastPingTimestamp, retrievedObj.LastPingTimestamp);
-            Assert.Equal(obj.UserIP, retrievedObj.UserIP);
+            Assert.Equal(obj.Id, retrievedObj.Id);
 
             // Clean up (delete the key)
             await redisService.DeleteAsync(key);
@@ -95,12 +96,13 @@ namespace CS.Session.Tests
         {
             // Arrange
             RedisService redisService = GetRedisService(serviceType);
-            string key = "session:9876";
+            
+            string key = SessionUtil.GetRedisKey("9.9.9.9");
             var obj = new SessionDto
             {
                 State = SessionState.PAUSE,
                 LastPingTimestamp = 1726428892,
-                UserIP = "8.8.8.8"
+                Id = "2-3-4"
             };
 
             // Act

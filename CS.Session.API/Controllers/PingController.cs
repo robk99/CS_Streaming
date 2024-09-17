@@ -1,81 +1,104 @@
+using CS.Session.Infrastructure.Dtos;
+using CS.Session.Infrastructure.Abstractions;
+using CS.Session.Infrastructure.Services.Cache;
+using CS.Session.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.NetworkInformation;
 
 namespace CS.Session.API.Controllers
 {
-
-    public class ResponseDto
-    {
-        public object? Result { get; set; }
-        public bool IsSuccess { get; set; } = true;
-        public string Message { get; set; } = "";
-    }
-
     [ApiController]
     [Route("api/session")]
     public class PingController : ControllerBase
     {
         private readonly ILogger<PingController> _logger;
+        private readonly IPingService _pingService;
+        private readonly IJobService _jobService;
+        private readonly RedisCacheService _cacheService;
 
-        public PingController(ILogger<PingController> logger)
+        public PingController(ILogger<PingController> logger, IPingService pingService, RedisCacheService cacheService, IJobService jobService)
         {
             _logger = logger;
+            _pingService = pingService;
+            _jobService = jobService;
+            _cacheService = cacheService;
         }
 
 
-        private static readonly HttpClient _httpClient = new HttpClient();
-
-        [HttpGet("Ping/{ip}")]
-
-        public async Task<ResponseDto> Ping(string ip)
+        [HttpGet("test-ping/{ip}")]
+        public async Task<ActionResult<ResponseDto<PingDataDto>>> Ping(string ip)
         {
-            ResponseDto response = new();
+            return Ok(await _pingService.Ping(ip));
+        }
 
-            try
+
+        [HttpPost("test-create")]
+        public async Task<ActionResult<ResponseDto>> TestCreate([FromBody] BaseSessionDto session)
+        {
+            var redisKey = SessionUtil.GetRedisKey(session.UserIP);
+
+            // TODO: if not exist - create new in DB
+            // TODO: Get id from DB
+            string sessionId = Guid.NewGuid().ToString();
+
+            SessionDto cachedSession = new()
             {
-                IPAddress ipAddress;
+                State = session.State,
+                LastPingTimestamp = 0,
+                Id = sessionId
+            };
 
-                if (IPAddress.TryParse(ip, out ipAddress))
-                {
-                    Console.WriteLine($"IP Address: {ipAddress}");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid IP Address");
-                }
+            await _cacheService.SetHashAsync(redisKey, cachedSession);
 
-                Ping ping = new Ping();
-
-                var startMessage = $"Ping started at: {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff")}";
-                Console.WriteLine(startMessage);
-                PingReply result = await ping.SendPingAsync(ipAddress, 5000);
-                if (result.Status == IPStatus.Success)
-                {
-                    Console.WriteLine("Ping successful!");
-                    Console.WriteLine($"Response: {result.Status}");
-                }
-                else
-                {
-                    Console.WriteLine("Ping failed!");
-                    Console.WriteLine($"Response: {result.Status}");
-                    response.IsSuccess = false;
-                }
-                var endMessage = $"Ping ended at: {DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff")}";
-                Console.WriteLine(endMessage);
-
-                response.Message = result.Status.ToString();
-                response.Result = new { start = startMessage, end = endMessage };
-            }
-            catch (Exception ex)
+            return Ok(new ResponseDto()
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                response.Message = "Exception";
-                response.Result = new { exception = ex.Message };
-                response.IsSuccess = false;
+                Message = $"Session {sessionId} created in cache!",
+            });
+        }
+
+
+
+
+        // TODO: Global Exception handler for controllers - Bubble up errors !
+
+
+
+
+        [HttpPost("update")]
+        public async Task<ActionResult<ResponseDto>> Update([FromBody] BaseSessionDto session)
+        {
+            // In real scenario, get User IP from X-Forwarded-For header
+            var redisKey = SessionUtil.GetRedisKey(session.UserIP);
+            var cachedSession = await _cacheService.GetHashAsync<SessionDto>(redisKey);
+
+            if (cachedSession == null)
+            {
+                // TODO: get UserId from JWT claims
+
+                // TODO: if not exist - create new in DB
+                // TODO: Get id from DB
+                string sessionId = Guid.NewGuid().ToString();
+
+                cachedSession = new()
+                {
+                    State = session.State,
+                    LastPingTimestamp = 0,
+                    Id = sessionId
+                };
+
+                await _cacheService.SetHashAsync(redisKey, cachedSession);
+
+                _jobService.AddRecurringPingJob(sessionId, session.UserIP);
+            }
+            else
+            {
+                cachedSession.State = session.State;
+                await _cacheService.SetHashAsync(redisKey, cachedSession);
             }
 
-            return response;
+            return Ok(new ResponseDto()
+            {
+                Message = $"Session with state {session.State} acknowledged",
+            });
         }
     }
 }

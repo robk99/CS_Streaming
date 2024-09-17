@@ -1,4 +1,4 @@
-﻿namespace CS.Session.Infrastructure.Interfaces
+﻿namespace CS.Session.Infrastructure.Abstractions
 {
     public interface IRedisService
     {

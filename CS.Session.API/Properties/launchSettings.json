@@ -3,7 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/session/ping/8.8.8.8",
+      "launchUrl": "api/session/test-ping/8.8.8.8",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -13,17 +13,17 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/session/ping/8.8.8.8",
+      "launchUrl": "api/session/test-ping/8.8.8.8",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7176;http://localhost:5298"
+      "applicationUrl": "https://localhost:6001;http://localhost:6002"
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/session/ping/8.8.8.8",
+      "launchUrl": "api/session/test-ping/8.8.8.8",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
