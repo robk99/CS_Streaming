@@ -68,7 +68,7 @@ namespace CS.Session.Tests
 
             // Arrange
             string key = SessionUtil.GetRedisKey("8.8.8.8");
-            var obj = new SessionDto
+            var obj = new CachedSessionDto
             {
                 State = SessionState.PAUSE,
                 LastPingTimestamp = 1726428892,
@@ -76,8 +76,8 @@ namespace CS.Session.Tests
             };
 
             // Act
-            await redisService.SetHashAsync<SessionDto>(key, obj);
-            var retrievedObj = await redisService.GetHashAsync<SessionDto>(key);
+            await redisService.SetHashAsync<CachedSessionDto>(key, obj);
+            var retrievedObj = await redisService.GetHashAsync<CachedSessionDto>(key);
 
             // Assert
             Assert.Equal(obj.State, retrievedObj.State);
@@ -98,7 +98,7 @@ namespace CS.Session.Tests
             RedisService redisService = GetRedisService(serviceType);
             
             string key = SessionUtil.GetRedisKey("9.9.9.9");
-            var obj = new SessionDto
+            var obj = new CachedSessionDto
             {
                 State = SessionState.PAUSE,
                 LastPingTimestamp = 1726428892,
@@ -106,9 +106,9 @@ namespace CS.Session.Tests
             };
 
             // Act
-            await redisService.SetHashAsync<SessionDto>(key, obj);
+            await redisService.SetHashAsync<CachedSessionDto>(key, obj);
             await redisService.DeleteAsync(key);
-            var retrievedObj = await redisService.GetHashAsync<SessionDto>(key);
+            var retrievedObj = await redisService.GetHashAsync<CachedSessionDto>(key);
 
             // Assert
             Assert.Null(retrievedObj);

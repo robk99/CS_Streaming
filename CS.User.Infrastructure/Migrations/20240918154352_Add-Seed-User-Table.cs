@@ -53,6 +53,7 @@ namespace CS.User.Infrastructure.Migrations
                 BEGIN
                     INSERT INTO Users (Name, Surname, Email)
                     VALUES (@Name, @Surname, @Email);
+                    SELECT SCOPE_IDENTITY() AS NewUserId;
                 END;
                 GO
             ");

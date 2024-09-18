@@ -1,4 +1,6 @@
-﻿using CS.Session.Domain.Sessions;
+﻿using Azure.Identity;
+using CS.Session.Domain.Abstractions;
+using CS.Session.Domain.Sessions;
 using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Dtos;
 using CS.Session.Infrastructure.Services.Cache;
@@ -30,7 +32,7 @@ namespace CS.Session.Infrastructure.Services.Queue.Jobs
             var pingResponse = await _pingService.Ping(userIP);
 
             var redisKey = SessionUtil.GetRedisKey(userIP);
-            var cachedSession = await _cacheService.GetHashAsync<SessionDto>(redisKey);
+            var cachedSession = await _cacheService.GetHashAsync<CachedSessionDto>(redisKey);
             if (cachedSession == null)
             {
                 // TODO: Log
@@ -46,7 +48,6 @@ namespace CS.Session.Infrastructure.Services.Queue.Jobs
                     break;
 
                 case IPStatus.TimedOut:
-                    // TODO: Edit in DB and save
                     cachedSession.State = SessionState.CLOSED;
                     break;
                 

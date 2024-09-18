@@ -58,7 +58,7 @@ namespace CS.Session.Infrastructure.Services.Queue
                     if (resultString == SessionState.CLOSED.ToString())
                     {
                         RecurringJob.RemoveIfExists(jobId);
-                        _sessionStateHandler.OnStateClosed(userIP, resultString);
+                        _sessionStateHandler.OnStateClosed(jobId, userIP, resultString);
                     }
                     break;
 
@@ -76,7 +76,7 @@ namespace CS.Session.Infrastructure.Services.Queue
             {
                 case nameof(UserPingJob):
                     // TODO: Log
-                    //Console.WriteLine($"JOB FAILED {jobId}");
+                    Console.WriteLine($"JOB FAILED {jobId}");
                     break;
 
                 default:

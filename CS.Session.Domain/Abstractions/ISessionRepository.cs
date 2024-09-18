@@ -2,8 +2,8 @@
 {
     public interface ISessionRepository
     {
-        void Create(Sessions.Session session);
-        Sessions.Session GetById(long id);
-        void Update(Sessions.Session session);
+        Task<long> Create(Sessions.Session session);
+        Task<Sessions.Session> GetById(long id);
+        Task Update(Sessions.Session session);
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        void Create(Users.User user);
-        Users.User GetById(int id);
+        Task<int> Create(Users.User user);
+        Task<Users.User> GetById(int id);
     }
 }

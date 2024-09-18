@@ -13,9 +13,9 @@ namespace CS.User.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public void Create(Domain.Users.User user)
+        public async Task<int> Create(Domain.Users.User user)
         {
-            _context.Database.ExecuteSqlRaw(
+            return await _context.Database.ExecuteSqlRawAsync(
                 "EXEC Users_Create @Name, @Surname, @Email",
                 new SqlParameter("@Name", user.Name),
                 new SqlParameter("@Surname", user.Surname),
@@ -23,10 +23,10 @@ namespace CS.User.Infrastructure.Database.Repositories
             );
         }
 
-        public Domain.Users.User GetById(int id)
+        public async Task<Domain.Users.User> GetById(int id)
         {
-            return _context.Users.FromSqlRaw("EXEC Users_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefault();
+            return await _context.Users.FromSqlRaw("EXEC Users_GetById @Id",
+                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
         }
     }
 }

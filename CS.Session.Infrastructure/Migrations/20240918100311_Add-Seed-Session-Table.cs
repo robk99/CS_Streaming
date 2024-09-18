@@ -66,6 +66,7 @@ namespace CS.Session.Infrastructure.Migrations
             BEGIN
                 INSERT INTO Sessions (MediaId, UserId, State, StartTime, EndTime)
                 VALUES (@MediaId, @UserId, @State, @StartTime, @EndTime);
+                SELECT SCOPE_IDENTITY() AS NewSessionId;
             END;
             GO");
 

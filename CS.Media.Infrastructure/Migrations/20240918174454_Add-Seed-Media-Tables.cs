@@ -99,6 +99,7 @@ namespace CS.Media.Infrastructure.Migrations
             BEGIN
                 INSERT INTO Medias (Name, MediaTypeId, LengthInSeconds)
                 VALUES (@Name, @MediaTypeId, @LengthInSeconds);
+                SELECT SCOPE_IDENTITY() AS NewMediaId;
             END;
             GO");
 

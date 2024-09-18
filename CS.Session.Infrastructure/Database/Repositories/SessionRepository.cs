@@ -13,9 +13,9 @@ namespace CS.Session.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public void Create(Domain.Sessions.Session session)
+        public async Task<long> Create(Domain.Sessions.Session session)
         {
-            _context.Database.ExecuteSqlRaw(
+            return await _context.Database.ExecuteSqlRawAsync(
                 "EXEC Sessions_Create @MediaId, @UserId, @State, @StartTime, @EndTime",
                 new SqlParameter("@MediaId", session.MediaId),
                 new SqlParameter("@UserId", session.UserId),
@@ -25,15 +25,15 @@ namespace CS.Session.Infrastructure.Database.Repositories
             );
         }
 
-        public Domain.Sessions.Session GetById(long id)
+        public async Task<Domain.Sessions.Session> GetById(long id)
         {
-            return _context.Sessions.FromSqlRaw("EXEC Sessions_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefault();
+            return await _context.Sessions.FromSqlRaw("EXEC Sessions_GetById @Id",
+                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
         }
 
-        public void Update(Domain.Sessions.Session session)
+        public async Task Update(Domain.Sessions.Session session)
         {
-            _context.Database.ExecuteSqlRaw(
+            await _context.Database.ExecuteSqlRawAsync(
                 "EXEC Sessions_Update @Id, @State, @EndTime",
                 new SqlParameter("@Id", session.Id),
                 new SqlParameter("@State", session.State),

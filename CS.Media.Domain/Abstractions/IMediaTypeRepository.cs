@@ -2,6 +2,6 @@
 {
     public interface IMediaTypeRepository
     {
-        Medias.MediaType GetById(int id);
+        Task<Medias.MediaType> GetById(int id);
     }
 }

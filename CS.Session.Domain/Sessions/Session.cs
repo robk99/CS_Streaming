@@ -6,6 +6,7 @@ namespace CS.Session.Domain.Sessions
     public class Session
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         [Required]
         [ForeignKey("MediaId")]

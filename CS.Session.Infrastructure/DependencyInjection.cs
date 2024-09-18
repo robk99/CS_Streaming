@@ -2,9 +2,11 @@
 using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Database;
 using CS.Session.Infrastructure.Database.Repositories;
+using CS.Session.Infrastructure.Services.AutoMapper;
 using CS.Session.Infrastructure.Services.Cache;
 using CS.Session.Infrastructure.Services.Ping;
 using CS.Session.Infrastructure.Services.Queue;
+using CS.Session.Infrastructure.Session;
 using CS.Session.Infrastructure.State;
 using Hangfire;
 using Hangfire.Redis.StackExchange;
@@ -19,6 +21,8 @@ namespace CS.Session.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
 
@@ -33,6 +37,8 @@ namespace CS.Session.Infrastructure
 
             services.AddHangfireTaskScheduler(configuration);
             services.AddScoped<IJobService, HangfireJobService>();
+
+            services.AddScoped<ISessionHandler, SessionHandler>();
 
             return services;
         }

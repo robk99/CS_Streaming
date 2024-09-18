@@ -13,10 +13,10 @@ namespace CS.Media.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public Domain.Medias.MediaType GetById(int id)
+        public async Task<Domain.Medias.MediaType> GetById(int id)
         {
-            return _context.MediaTypes.FromSqlRaw("EXEC MediaTypes_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefault();
+            return await _context.MediaTypes.FromSqlRaw("EXEC MediaTypes_GetById @Id",
+                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
         }
     }
 }

@@ -13,9 +13,9 @@ namespace CS.Media.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public void Create(Domain.Medias.Media media)
+        public async Task<int> Create(Domain.Medias.Media media)
         {
-            _context.Database.ExecuteSqlRaw(
+            return await _context.Database.ExecuteSqlRawAsync(
                 "EXEC Medias_Create @Name, @MediaTypeId, @LengthInSeconds",
                 new SqlParameter("@Name", media.Name),
                 new SqlParameter("@MediaTypeId", media.MediaTypeId),
@@ -23,10 +23,10 @@ namespace CS.Media.Infrastructure.Database.Repositories
             );
         }
 
-        public  Domain.Medias.Media GetById(int id)
+        public async Task<Domain.Medias.Media> GetById(int id)
         {
-            return _context.Medias.FromSqlRaw("EXEC Medias_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefault();
+            return await _context.Medias.FromSqlRaw("EXEC Medias_GetById @Id",
+                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
         }
     }
 }

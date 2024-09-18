@@ -2,7 +2,7 @@
 {
     public interface IMediaRepository
     {
-        void Create(Medias.Media media);
-        Medias.Media GetById(int id);
+        Task<int> Create(Medias.Media media);
+        Task<Medias.Media> GetById(int id);
     }
 }

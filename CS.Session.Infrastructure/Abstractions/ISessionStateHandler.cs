@@ -2,6 +2,6 @@
 {
     public interface ISessionStateHandler
     {
-        public Task OnStateClosed(string userIP, string sessionState);
+        public Task OnStateClosed(string sessionId, string userIP, string sessionState);
     }
 }
