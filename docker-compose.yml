@@ -1,20 +1,32 @@
 version: '3'
 services:
+
+  #Session
   cs.session.api:
     container_name: session.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
     build:
       context: .
       dockerfile: CS.Session.API/Dockerfile
     ports:
       - "5000:8080"
-      - "5001:8081"
-
+    depends_on:
+      - cs.session.mssql
+      - cs.session.redis.cache
+      - cs.session.redis.queue
+    networks:
+      - session_network
+  
   cs.session.redis.cache:
     image: redis:latest
     container_name: session.redis.cache
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - session_network
 
   cs.session.redis.queue:
     image: redis:latest
@@ -22,3 +34,78 @@ services:
     restart: always
     ports:
       - "6380:6379"
+    networks:
+      - session_network
+
+  cs.session.mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: session.mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_DATABASE=CS_Session
+      - MSSQL_SA_PASSWORD=SessionPass123
+    ports:
+      - "1433:1433"
+    networks:
+      - session_network
+  
+  #User
+  cs.user.api:
+    container_name: user.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    build:
+      context: .
+      dockerfile: CS.User.API/Dockerfile
+    ports:
+      - "5010:8080"
+    depends_on:
+      - cs.user.mssql
+    networks:
+      - user_network
+  
+  cs.user.mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: user.mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_DATABASE=CS_User
+      - MSSQL_SA_PASSWORD=UserPass123
+    ports:
+      - "1434:1433"
+    networks:
+      - user_network
+
+  #Media
+  cs.media.api:
+    container_name: media.api
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Production
+        - ASPNETCORE_HTTP_PORTS=8080
+    build:
+        context: .
+        dockerfile: CS.Media.API/Dockerfile
+    ports:
+        - "5020:8080"
+    depends_on:
+        - cs.media.mssql
+    networks:
+        - media_network
+  
+  cs.media.mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: media.mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_DATABASE=CS_Media
+      - MSSQL_SA_PASSWORD=MediaPass123
+    ports:
+      - "1435:1433"
+    networks:
+      - media_network
+
+networks:
+  session_network:
+  user_network:
+  media_network:

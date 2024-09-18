@@ -1,10 +1,12 @@
 ﻿using CS.Session.Infrastructure.Abstractions;
+using CS.Session.Infrastructure.Database;
 using CS.Session.Infrastructure.Services.Cache;
 using CS.Session.Infrastructure.Services.Ping;
 using CS.Session.Infrastructure.Services.Queue;
 using CS.Session.Infrastructure.State;
 using Hangfire;
 using Hangfire.Redis.StackExchange;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -15,6 +17,9 @@ namespace CS.Session.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Database")));
+
             services.AddRedisService<RedisQueueService>(configuration, "Queue");
             services.AddRedisService<RedisCacheService>(configuration, "Cache");
 
