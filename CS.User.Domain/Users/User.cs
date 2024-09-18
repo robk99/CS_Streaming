@@ -1,4 +1,4 @@
-﻿namespace CS.User.Domain.User
+﻿namespace CS.User.Domain.Users
 {
     public class User
     {

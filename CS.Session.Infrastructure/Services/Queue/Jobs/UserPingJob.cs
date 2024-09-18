@@ -1,4 +1,4 @@
-﻿using CS.Session.Domain.Session;
+﻿using CS.Session.Domain.Sessions;
 using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Dtos;
 using CS.Session.Infrastructure.Services.Cache;

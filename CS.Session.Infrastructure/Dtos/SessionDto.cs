@@ -1,4 +1,4 @@
-﻿using CS.Session.Domain.Session;
+﻿using CS.Session.Domain.Sessions;
 using System.Text.Json.Serialization;
 
 namespace CS.Session.Infrastructure.Dtos

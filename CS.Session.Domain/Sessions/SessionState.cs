@@ -1,4 +1,4 @@
-﻿namespace CS.Session.Domain.Session
+﻿namespace CS.Session.Domain.Sessions
 {
     public enum SessionState
     {

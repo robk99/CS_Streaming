@@ -1,4 +1,4 @@
-﻿namespace CS.Media.Domain.Media
+﻿namespace CS.Media.Domain.Medias
 {
     public class Media
     {
