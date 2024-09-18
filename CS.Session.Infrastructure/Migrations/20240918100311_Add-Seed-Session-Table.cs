@@ -56,6 +56,41 @@ namespace CS.Session.Infrastructure.Migrations
                     { 19L, new DateTime(2024, 9, 18, 8, 35, 11, 517, DateTimeKind.Local).AddTicks(4245), 2, new DateTime(2024, 9, 18, 8, 10, 11, 517, DateTimeKind.Local).AddTicks(4245), 5, 8 },
                     { 20L, new DateTime(2024, 9, 18, 10, 16, 11, 517, DateTimeKind.Local).AddTicks(4258), 3, new DateTime(2024, 9, 18, 7, 39, 11, 517, DateTimeKind.Local).AddTicks(4258), 5, 6 }
                 });
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE Sessions_Create
+                @MediaId INT,
+                @UserId INT,
+                @State NVARCHAR(20),
+                @StartTime DATETIME,
+                @EndTime DATETIME = NULL
+            AS
+            BEGIN
+                INSERT INTO Sessions (MediaId, UserId, State, StartTime, EndTime)
+                VALUES (@MediaId, @UserId, @State, @StartTime, @EndTime);
+            END;
+            GO");
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE Sessions_GetById
+                @Id BIGINT
+            AS
+            BEGIN
+                SELECT * FROM Sessions WHERE Id = @Id;
+            END;
+            GO");
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE Sessions_Update
+                @Id BIGINT,
+                @State VARCHAR(20),
+                @EndTime DATETIME = NULL
+            AS
+            BEGIN
+                UPDATE Sessions
+                SET 
+                    State = @State,
+                    EndTime = @EndTime
+                WHERE Id = @Id;
+            END;
+            GO");
         }
 
         /// <inheritdoc />
@@ -63,6 +98,10 @@ namespace CS.Session.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Sessions");
+
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Sessions_Create;");
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Sessions_GetById;");
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Sessions_Update;");
         }
     }
 }

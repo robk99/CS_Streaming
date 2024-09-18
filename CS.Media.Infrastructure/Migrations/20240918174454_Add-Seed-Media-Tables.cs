@@ -90,6 +90,33 @@ namespace CS.Media.Infrastructure.Migrations
                 name: "IX_Medias_MediaTypeId",
                 table: "Medias",
                 column: "MediaTypeId");
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE Medias_Create
+                @Name NVARCHAR(100),
+                @MediaTypeId INT,
+                @LengthInSeconds INT = NULL
+            AS
+            BEGIN
+                INSERT INTO Medias (Name, MediaTypeId, LengthInSeconds)
+                VALUES (@Name, @MediaTypeId, @LengthInSeconds);
+            END;
+            GO");
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE Medias_GetById
+                @Id INT
+            AS
+            BEGIN
+                SELECT * FROM Medias WHERE Id = @Id;
+            END;
+            GO");
+
+            migrationBuilder.Sql(@"CREATE PROCEDURE MediaTypes_GetById
+                @Id INT
+            AS
+            BEGIN
+                SELECT * FROM MediaTypes WHERE Id = @Id;
+            END;
+            GO");
         }
 
         /// <inheritdoc />
@@ -100,6 +127,11 @@ namespace CS.Media.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "MediaTypes");
+
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Medias_Create;");
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Medias_Create;");
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS MediaTypes_GetById;");
+
         }
     }
 }

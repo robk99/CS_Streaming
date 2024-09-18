@@ -43,6 +43,29 @@ namespace CS.User.Infrastructure.Migrations
                     { 9, "john-9.doe-9@fakemail12.com", "John-9", "Doe-9" },
                     { 10, "john-10.doe-10@fakemail12.com", "John-10", "Doe-10" }
                 });
+
+            migrationBuilder.Sql(@"
+                CREATE PROCEDURE Users_Create
+                    @Name NVARCHAR(100),
+                    @Surname NVARCHAR(100),
+                    @Email NVARCHAR(100)
+                AS
+                BEGIN
+                    INSERT INTO Users (Name, Surname, Email)
+                    VALUES (@Name, @Surname, @Email);
+                END;
+                GO
+            ");
+
+            migrationBuilder.Sql(@"
+                CREATE PROCEDURE Users_GetById
+                    @Id INT
+                AS
+                BEGIN
+                    SELECT * FROM Users WHERE Id = @Id;
+                END;
+                GO
+            ");
         }
 
         /// <inheritdoc />
@@ -50,6 +73,9 @@ namespace CS.User.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Users_Create;");
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS Users_GetById;");
         }
     }
 }

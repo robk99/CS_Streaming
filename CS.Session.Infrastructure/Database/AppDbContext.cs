@@ -15,6 +15,10 @@ namespace CS.Session.Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Domain.Sessions.Session>()
+            .Property(s => s.State)
+            .HasConversion<string>();
+
             SeedData(modelBuilder);
         }
 
