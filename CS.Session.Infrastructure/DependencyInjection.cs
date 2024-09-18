@@ -1,5 +1,7 @@
-﻿using CS.Session.Infrastructure.Abstractions;
+﻿using CS.Session.Domain.Abstractions;
+using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Database;
+using CS.Session.Infrastructure.Database.Repositories;
 using CS.Session.Infrastructure.Services.Cache;
 using CS.Session.Infrastructure.Services.Ping;
 using CS.Session.Infrastructure.Services.Queue;
@@ -19,6 +21,8 @@ namespace CS.Session.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
+
+            services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddRedisService<RedisQueueService>(configuration, "Queue");
             services.AddRedisService<RedisCacheService>(configuration, "Cache");

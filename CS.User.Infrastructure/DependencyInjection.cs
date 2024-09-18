@@ -1,4 +1,6 @@
-﻿using CS.User.Infrastructure.Database;
+﻿using CS.User.Domain.Abstractions;
+using CS.User.Infrastructure.Database;
+using CS.User.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,8 @@ namespace CS.User.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

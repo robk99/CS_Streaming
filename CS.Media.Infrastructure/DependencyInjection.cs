@@ -1,4 +1,5 @@
-﻿using CS.Media.Infrastructure.Database;
+﻿using CS.Media.Domain.Abstractions;
+using CS.Media.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,9 @@ namespace CS.Media.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
+
+            services.AddScoped<IMediaRepository, Database.Repositories.MediaRepository>();
+            services.AddScoped<IMediaTypeRepository, Database.Repositories.MediaTypeRepository>();
 
             return services;
         }
