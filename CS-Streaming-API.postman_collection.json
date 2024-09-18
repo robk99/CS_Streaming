@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "10e3c05e-96a4-4766-94af-a76156ae72bf",
+		"name": "CS-Streaming-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9438347"
+	},
+	"item": [
+		{
+			"name": "session/update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"State\": \"PLAY\",\r\n    \"UserIP\": \"7.7.7.7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5000/api/session/update",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"session",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "session/test-ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/session/test-ping/192.232.995",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"session",
+						"test-ping",
+						"192.232.995"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
