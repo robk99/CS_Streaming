@@ -7,13 +7,13 @@
 	},
 	"item": [
 		{
-			"name": "session/update",
+			"name": "session/test-update",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"State\": \"PLAY\",\r\n    \"UserIP\": \"7.7.7.7\"\r\n}",
+					"raw": "{\r\n    \"State\": \"PLAY\",\r\n    \"UserIP\": \"192.158.4.8\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,8 +21,8 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:5000/api/session/update",
-					"protocol": "https",
+					"raw": "http://localhost:5000/api/session/test-update",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
@@ -30,7 +30,7 @@
 					"path": [
 						"api",
 						"session",
-						"update"
+						"test-update"
 					]
 				}
 			},
@@ -42,7 +42,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/session/test-ping/192.232.995",
+					"raw": "http://localhost:5000/api/session/test-ping/8.8.8.8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -52,7 +52,7 @@
 						"api",
 						"session",
 						"test-ping",
-						"192.232.995"
+						"8.8.8.8"
 					]
 				}
 			},
