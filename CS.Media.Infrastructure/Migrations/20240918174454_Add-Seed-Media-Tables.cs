@@ -94,12 +94,13 @@ namespace CS.Media.Infrastructure.Migrations
             migrationBuilder.Sql(@"CREATE PROCEDURE Medias_Create
                 @Name NVARCHAR(100),
                 @MediaTypeId INT,
-                @LengthInSeconds INT = NULL
+                @LengthInSeconds INT = NULL,
+                @NewMediaId INT OUTPUT
             AS
             BEGIN
                 INSERT INTO Medias (Name, MediaTypeId, LengthInSeconds)
                 VALUES (@Name, @MediaTypeId, @LengthInSeconds);
-                SELECT SCOPE_IDENTITY() AS NewMediaId;
+                SET @NewMediaId = SCOPE_IDENTITY();
             END;
             GO");
 

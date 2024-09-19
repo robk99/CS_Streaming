@@ -48,12 +48,13 @@ namespace CS.User.Infrastructure.Migrations
                 CREATE PROCEDURE Users_Create
                     @Name NVARCHAR(100),
                     @Surname NVARCHAR(100),
-                    @Email NVARCHAR(100)
+                    @Email NVARCHAR(100),
+                    @NewUserId INT OUTPUT
                 AS
                 BEGIN
                     INSERT INTO Users (Name, Surname, Email)
                     VALUES (@Name, @Surname, @Email);
-                    SELECT SCOPE_IDENTITY() AS NewUserId;
+                    SET @NewUserId = SCOPE_IDENTITY();
                 END;
                 GO
             ");

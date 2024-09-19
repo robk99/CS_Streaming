@@ -61,12 +61,13 @@ namespace CS.Session.Infrastructure.Migrations
                 @UserId INT,
                 @State NVARCHAR(20),
                 @StartTime DATETIME,
-                @EndTime DATETIME = NULL
+                @EndTime DATETIME = NULL,
+                @NewSessionId BIGINT OUTPUT
             AS
             BEGIN
                 INSERT INTO Sessions (MediaId, UserId, State, StartTime, EndTime)
                 VALUES (@MediaId, @UserId, @State, @StartTime, @EndTime);
-                SELECT SCOPE_IDENTITY() AS NewSessionId;
+                SET @NewSessionId = SCOPE_IDENTITY();
             END;
             GO");
 
