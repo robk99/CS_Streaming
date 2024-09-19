@@ -25,8 +25,8 @@ namespace CS.Media.Infrastructure.Database.Repositories
 
         public async Task<Domain.Medias.Media> GetById(int id)
         {
-            return await _context.Medias.FromSqlRaw("EXEC Medias_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
+            return _context.Medias.FromSqlRaw("EXEC Medias_GetById @Id",
+                new SqlParameter("@Id", id)).AsEnumerable().First();
         }
     }
 }

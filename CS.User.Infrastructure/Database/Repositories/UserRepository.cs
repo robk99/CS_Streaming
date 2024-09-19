@@ -25,8 +25,8 @@ namespace CS.User.Infrastructure.Database.Repositories
 
         public async Task<Domain.Users.User> GetById(int id)
         {
-            return await _context.Users.FromSqlRaw("EXEC Users_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
+            return _context.Users.FromSqlRaw("EXEC Users_GetById @Id",
+                new SqlParameter("@Id", id)).AsEnumerable().First();
         }
     }
 }

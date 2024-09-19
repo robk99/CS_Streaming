@@ -27,8 +27,9 @@ namespace CS.Session.Infrastructure.Database.Repositories
 
         public async Task<Domain.Sessions.Session> GetById(long id)
         {
-            return await _context.Sessions.FromSqlRaw("EXEC Sessions_GetById @Id",
-                new SqlParameter("@Id", id)).FirstOrDefaultAsync();
+            return _context.Sessions.FromSqlRaw("EXEC Sessions_GetById @Id",
+                new SqlParameter("@Id", id))
+                .AsEnumerable().First();
         }
 
         public async Task Update(Domain.Sessions.Session session)
