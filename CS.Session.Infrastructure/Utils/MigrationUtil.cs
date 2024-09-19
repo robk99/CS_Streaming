@@ -1,28 +1,39 @@
 ﻿using CS.Session.Infrastructure.Database;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace CS.Session.Infrastructure.Utils
 {
     public static class MigrationUtil
     {
-        public static void ApplyMigrationsAndSeed(this WebApplication app)
+        public async static Task ApplyMigrationsAndSeed(this WebApplication app)
         {
-            using (var scope = app.Services.CreateScope())
+            var retryPolicy = Policy.Handle<SqlException>()
+            .WaitAndRetryAsync(10, attempt => TimeSpan.FromSeconds(3), (exception, timeSpan, retryCount, context) =>
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                Console.WriteLine($"Retry {retryCount} failed to connect to the DB. Retrying in {timeSpan.TotalSeconds} seconds.");
+            });
 
-                if (context.Database.GetPendingMigrations().Any())
+            await retryPolicy.ExecuteAsync(async () =>
+            {
+                using (var scope = app.Services.CreateScope())
                 {
-                    Console.WriteLine("----------------- APPLYING MIGRATIONS -----------------");
-                    context.Database.Migrate();
+                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                    if (context.Database.GetPendingMigrations().Any())
+                    {
+                        Console.WriteLine("----------------- APPLYING MIGRATIONS -----------------");
+                        context.Database.Migrate();
+                    }
+                    else
+                    {
+                        Console.WriteLine("----------------- NO MIGRATIONS -----------------");
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("----------------- NO MIGRATIONS -----------------");
-                }
-            }
+            });
         }
     }
 }

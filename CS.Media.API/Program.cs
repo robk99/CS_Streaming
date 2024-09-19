@@ -23,6 +23,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-MigrationUtil.ApplyMigrationsAndSeed(app);
+await MigrationUtil.ApplyMigrationsAndSeed(app);
 
 app.Run();

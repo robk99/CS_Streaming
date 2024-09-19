@@ -24,7 +24,15 @@ namespace CS.Session.Infrastructure
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Database")));
+            options.UseSqlServer(configuration.GetConnectionString("Database"),
+            sqlServerOptionsAction: sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 10,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null);
+            }
+            ));
 
             services.AddScoped<ISessionRepository, SessionRepository>();
 
@@ -74,7 +82,8 @@ namespace CS.Session.Infrastructure
                     services.BuildServiceProvider().GetRequiredService<ISessionStateHandler>()))
                 );
 
-            services.AddHangfireServer(x => {
+            services.AddHangfireServer(x =>
+            {
                 x.WorkerCount = 50; // Set this option based on the machine microservice is spinning on
                 x.SchedulePollingInterval = TimeSpan.FromSeconds(1);
             });
