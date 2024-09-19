@@ -8,6 +8,7 @@ namespace CS.Session.Infrastructure.Services.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<Domain.Sessions.Session, SessionDto>();
+            CreateMap<SessionDto, Domain.Sessions.Session>();
         }
     }
 }

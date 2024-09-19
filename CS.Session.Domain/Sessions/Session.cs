@@ -18,6 +18,6 @@ namespace CS.Session.Domain.Sessions
         public SessionState State { get; set; }
         [Required]
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
     }
 }

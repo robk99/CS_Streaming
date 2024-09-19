@@ -10,7 +10,7 @@ namespace CS.Session.Infrastructure.Dtos
         public int UserId { get; set; }
         public SessionState State { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
     }
 
     public class CachedSessionDto
