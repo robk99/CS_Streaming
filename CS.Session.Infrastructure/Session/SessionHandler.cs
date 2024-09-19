@@ -58,8 +58,8 @@ namespace CS.Session.Infrastructure.Session
 
                 var sessionDto = new SessionDto
                 {
-                    MediaId = 0,
-                    UserId = 0,
+                    MediaId = 2,
+                    UserId = 1,
                     State = sessionUpdateDto.State,
                     StartTime = DateTime.Now,
                 };
