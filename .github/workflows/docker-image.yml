@@ -8,9 +8,30 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v4
+
+    # Cache Docker Compose binary on Windows
+    - name: Cache Docker Compose
+      id: docker-compose-cache
+      uses: actions/cache@v3
+      with:
+        path: C:\Tools\docker-compose.exe
+        key: docker-compose-v2.21.0
+
+    # Install Docker Compose if not cached
+    - name: Install Docker Compose
+      if: steps.docker-compose-cache.outputs.cache-hit != 'true'
+      run: |
+        New-Item -Path C:\Tools -ItemType Directory -Force
+        Invoke-WebRequest -Uri "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-Windows-x86_64.exe" -OutFile "C:\Tools\docker-compose.exe"
+
+    # Add docker-compose to the system PATH for the current session
+    - name: Add Docker Compose to PATH
+      run: |
+        echo "C:\Tools" >> $env:GITHUB_PATH
+
     - name: Build the Docker image
       run: docker-compose build
