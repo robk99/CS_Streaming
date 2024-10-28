@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CS.Common.Database.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace CS.Media.Domain.Medias
 {
-    public class MediaType
+    public class MediaType : AuditMetadata
     {
         [Key]
         public int Id { get; set; }

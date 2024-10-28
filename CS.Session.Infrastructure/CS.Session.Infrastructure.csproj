@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CS.Common\CS.Common.csproj" />
     <ProjectReference Include="..\CS.Session.Domain\CS.Session.Domain.csproj" />
   </ItemGroup>
 
