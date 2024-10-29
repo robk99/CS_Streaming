@@ -30,11 +30,17 @@ namespace CS.Media.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("LengthInSeconds")
                         .HasColumnType("int");
 
                     b.Property<int>("MediaTypeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,153 +56,175 @@ namespace CS.Media.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MediaTypeId = 3,
                             Name = "EPG"
                         },
                         new
                         {
                             Id = 2,
-                            LengthInSeconds = 3986,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 9848,
                             MediaTypeId = 1,
                             Name = "VOD-2"
                         },
                         new
                         {
                             Id = 3,
-                            LengthInSeconds = 8817,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 11899,
                             MediaTypeId = 1,
                             Name = "VOD-3"
                         },
                         new
                         {
                             Id = 4,
-                            LengthInSeconds = 639,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 5433,
                             MediaTypeId = 1,
                             Name = "VOD-4"
                         },
                         new
                         {
                             Id = 5,
-                            LengthInSeconds = 1106,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 6683,
                             MediaTypeId = 1,
                             Name = "VOD-5"
                         },
                         new
                         {
                             Id = 6,
-                            LengthInSeconds = 4830,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 9477,
                             MediaTypeId = 1,
                             Name = "VOD-6"
                         },
                         new
                         {
                             Id = 7,
-                            LengthInSeconds = 12959,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 8174,
                             MediaTypeId = 1,
                             Name = "VOD-7"
                         },
                         new
                         {
                             Id = 8,
-                            LengthInSeconds = 9618,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 10016,
                             MediaTypeId = 1,
                             Name = "VOD-8"
                         },
                         new
                         {
                             Id = 9,
-                            LengthInSeconds = 11711,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 14242,
                             MediaTypeId = 1,
                             Name = "VOD-9"
                         },
                         new
                         {
                             Id = 10,
-                            LengthInSeconds = 12331,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 14018,
                             MediaTypeId = 1,
                             Name = "VOD-10"
                         },
                         new
                         {
                             Id = 11,
-                            LengthInSeconds = 555,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 6016,
                             MediaTypeId = 1,
                             Name = "VOD-11"
                         },
                         new
                         {
                             Id = 12,
-                            LengthInSeconds = 2742,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 2952,
                             MediaTypeId = 2,
                             Name = "AOD-12"
                         },
                         new
                         {
                             Id = 13,
-                            LengthInSeconds = 2284,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 645,
                             MediaTypeId = 2,
                             Name = "AOD-13"
                         },
                         new
                         {
                             Id = 14,
-                            LengthInSeconds = 2834,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 1869,
                             MediaTypeId = 2,
                             Name = "AOD-14"
                         },
                         new
                         {
                             Id = 15,
-                            LengthInSeconds = 2351,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 1373,
                             MediaTypeId = 2,
                             Name = "AOD-15"
                         },
                         new
                         {
                             Id = 16,
-                            LengthInSeconds = 806,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 1608,
                             MediaTypeId = 2,
                             Name = "AOD-16"
                         },
                         new
                         {
                             Id = 17,
-                            LengthInSeconds = 2428,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 2586,
                             MediaTypeId = 2,
                             Name = "AOD-17"
                         },
                         new
                         {
                             Id = 18,
-                            LengthInSeconds = 3202,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 3371,
                             MediaTypeId = 2,
                             Name = "AOD-18"
                         },
                         new
                         {
                             Id = 19,
-                            LengthInSeconds = 294,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 803,
                             MediaTypeId = 2,
                             Name = "AOD-19"
                         },
                         new
                         {
                             Id = 20,
-                            LengthInSeconds = 2791,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 689,
                             MediaTypeId = 2,
                             Name = "AOD-20"
                         },
                         new
                         {
                             Id = 21,
-                            LengthInSeconds = 65,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 2910,
                             MediaTypeId = 2,
                             Name = "AOD-21"
                         },
                         new
                         {
                             Id = 22,
-                            LengthInSeconds = 1712,
+                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthInSeconds = 3473,
                             MediaTypeId = 2,
                             Name = "AOD-22"
                         });

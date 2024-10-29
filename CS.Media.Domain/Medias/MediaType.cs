@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CS.Media.Domain.Medias
 {
-    public class MediaType : AuditMetadata
+    public class MediaType
     {
         [Key]
         public int Id { get; set; }

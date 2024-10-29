@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS.Media.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241028181324_AddAuditMetadata")]
-    partial class AddAuditMetadata
+    [Migration("20241029171639_AddAudits")]
+    partial class AddAudits
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,17 @@ namespace CS.Media.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("LengthInSeconds")
                         .HasColumnType("int");
 
                     b.Property<int>("MediaTypeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -53,153 +59,175 @@ namespace CS.Media.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            
                             MediaTypeId = 3,
                             Name = "EPG"
                         },
                         new
                         {
                             Id = 2,
-                            LengthInSeconds = 3986,
+                            
+                            LengthInSeconds = 1343,
                             MediaTypeId = 1,
                             Name = "VOD-2"
                         },
                         new
                         {
                             Id = 3,
-                            LengthInSeconds = 8817,
+                            
+                            LengthInSeconds = 1599,
                             MediaTypeId = 1,
                             Name = "VOD-3"
                         },
                         new
                         {
                             Id = 4,
-                            LengthInSeconds = 639,
+                            
+                            LengthInSeconds = 1905,
                             MediaTypeId = 1,
                             Name = "VOD-4"
                         },
                         new
                         {
                             Id = 5,
-                            LengthInSeconds = 1106,
+                            
+                            LengthInSeconds = 8598,
                             MediaTypeId = 1,
                             Name = "VOD-5"
                         },
                         new
                         {
                             Id = 6,
-                            LengthInSeconds = 4830,
+                            
+                            LengthInSeconds = 8010,
                             MediaTypeId = 1,
                             Name = "VOD-6"
                         },
                         new
                         {
                             Id = 7,
-                            LengthInSeconds = 12959,
+                            
+                            LengthInSeconds = 3358,
                             MediaTypeId = 1,
                             Name = "VOD-7"
                         },
                         new
                         {
                             Id = 8,
-                            LengthInSeconds = 9618,
+                            
+                            LengthInSeconds = 1975,
                             MediaTypeId = 1,
                             Name = "VOD-8"
                         },
                         new
                         {
                             Id = 9,
-                            LengthInSeconds = 11711,
+                            
+                            LengthInSeconds = 9577,
                             MediaTypeId = 1,
                             Name = "VOD-9"
                         },
                         new
                         {
                             Id = 10,
-                            LengthInSeconds = 12331,
+                            
+                            LengthInSeconds = 7425,
                             MediaTypeId = 1,
                             Name = "VOD-10"
                         },
                         new
                         {
                             Id = 11,
-                            LengthInSeconds = 555,
+                            
+                            LengthInSeconds = 3789,
                             MediaTypeId = 1,
                             Name = "VOD-11"
                         },
                         new
                         {
                             Id = 12,
-                            LengthInSeconds = 2742,
+                            
+                            LengthInSeconds = 3270,
                             MediaTypeId = 2,
                             Name = "AOD-12"
                         },
                         new
                         {
                             Id = 13,
-                            LengthInSeconds = 2284,
+                            
+                            LengthInSeconds = 563,
                             MediaTypeId = 2,
                             Name = "AOD-13"
                         },
                         new
                         {
                             Id = 14,
-                            LengthInSeconds = 2834,
+                            
+                            LengthInSeconds = 1381,
                             MediaTypeId = 2,
                             Name = "AOD-14"
                         },
                         new
                         {
                             Id = 15,
-                            LengthInSeconds = 2351,
+                            
+                            LengthInSeconds = 2412,
                             MediaTypeId = 2,
                             Name = "AOD-15"
                         },
                         new
                         {
                             Id = 16,
-                            LengthInSeconds = 806,
+                            
+                            LengthInSeconds = 2279,
                             MediaTypeId = 2,
                             Name = "AOD-16"
                         },
                         new
                         {
                             Id = 17,
-                            LengthInSeconds = 2428,
+                            
+                            LengthInSeconds = 3340,
                             MediaTypeId = 2,
                             Name = "AOD-17"
                         },
                         new
                         {
                             Id = 18,
-                            LengthInSeconds = 3202,
+                            
+                            LengthInSeconds = 794,
                             MediaTypeId = 2,
                             Name = "AOD-18"
                         },
                         new
                         {
                             Id = 19,
-                            LengthInSeconds = 294,
+                            
+                            LengthInSeconds = 289,
                             MediaTypeId = 2,
                             Name = "AOD-19"
                         },
                         new
                         {
                             Id = 20,
-                            LengthInSeconds = 2791,
+                            
+                            LengthInSeconds = 678,
                             MediaTypeId = 2,
                             Name = "AOD-20"
                         },
                         new
                         {
                             Id = 21,
-                            LengthInSeconds = 65,
+                            
+                            LengthInSeconds = 231,
                             MediaTypeId = 2,
                             Name = "AOD-21"
                         },
                         new
                         {
                             Id = 22,
-                            LengthInSeconds = 1712,
+                            
+                            LengthInSeconds = 1911,
                             MediaTypeId = 2,
                             Name = "AOD-22"
                         });

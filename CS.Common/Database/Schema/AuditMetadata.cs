@@ -2,8 +2,8 @@
 {
     public abstract class AuditMetadata
     {
-        public DateTime CreatedOnUtc { get; }
+        public DateTime CreatedOnUtc { get; set; }
 
-        public DateTime? ModifiedOnUtc { get; }
+        public DateTime? ModifiedOnUtc { get; set; }
     }
 }

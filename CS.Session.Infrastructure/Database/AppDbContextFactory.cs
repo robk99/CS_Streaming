@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using CS.Common.Database.EntityFramework.Interceptors;
 
 namespace CS.Session.Infrastructure.Database
 {
@@ -20,7 +21,17 @@ namespace CS.Session.Infrastructure.Database
                 .Build();
 
             var connectionString = configuration.GetConnectionString("Database");
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString, options =>
+            {
+                options.EnableRetryOnFailure(
+                           maxRetryCount: 10,
+                           maxRetryDelay: TimeSpan.FromSeconds(10),
+                           errorNumbersToAdd: null
+                );
+            });
+
+            var auditInterceptor = new UpdateAuditMetadataInterceptor();
+            optionsBuilder.AddInterceptors(auditInterceptor);
 
             return new AppDbContext(optionsBuilder.Options);
         }

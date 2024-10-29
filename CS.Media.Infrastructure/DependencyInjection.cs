@@ -2,6 +2,7 @@
 using CS.Media.Domain.Abstractions;
 using CS.Media.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,18 +12,8 @@ namespace CS.Media.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<UpdateAuditMetadataInterceptor>();
-            services.AddDbContext<AppDbContext>((sp, options) =>
-                options.UseSqlServer(configuration.GetConnectionString("Database"),
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 10,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
-                    }
-                )
-                .AddInterceptors(sp.GetRequiredService<UpdateAuditMetadataInterceptor>())
+            services.AddDbContext<AppDbContext>(
+                 options => options.UseSqlServer(configuration.GetConnectionString("Database"))
             );
 
             services.AddScoped<IMediaRepository, Database.Repositories.MediaRepository>();

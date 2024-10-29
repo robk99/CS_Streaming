@@ -12,19 +12,8 @@ namespace CS.User.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<UpdateAuditMetadataInterceptor>();
-            services.AddDbContext<AppDbContext>((sp, options) =>
-                options.UseSqlServer(configuration.GetConnectionString("Database"),
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 10,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
-                    }
-
-                )
-                .AddInterceptors(sp.GetRequiredService<UpdateAuditMetadataInterceptor>())
+            services.AddDbContext<AppDbContext>(
+                options => options.UseSqlServer(configuration.GetConnectionString("Database"))
             );
 
             services.AddScoped<IUserRepository, UserRepository>();
