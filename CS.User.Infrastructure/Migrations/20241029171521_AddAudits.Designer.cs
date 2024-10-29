@@ -4,6 +4,7 @@ using CS.User.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS.User.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241029171521_AddAudits")]
+    partial class AddAudits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +59,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-1.doe-1@fakemail12.com",
                             Name = "John-1",
                             Surname = "Doe-1"
@@ -65,8 +67,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-2.doe-2@fakemail12.com",
                             Name = "John-2",
                             Surname = "Doe-2"
@@ -74,8 +75,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-3.doe-3@fakemail12.com",
                             Name = "John-3",
                             Surname = "Doe-3"
@@ -83,8 +83,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-4.doe-4@fakemail12.com",
                             Name = "John-4",
                             Surname = "Doe-4"
@@ -92,8 +91,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-5.doe-5@fakemail12.com",
                             Name = "John-5",
                             Surname = "Doe-5"
@@ -101,8 +99,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-6.doe-6@fakemail12.com",
                             Name = "John-6",
                             Surname = "Doe-6"
@@ -110,8 +107,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-7.doe-7@fakemail12.com",
                             Name = "John-7",
                             Surname = "Doe-7"
@@ -119,8 +115,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-8.doe-8@fakemail12.com",
                             Name = "John-8",
                             Surname = "Doe-8"
@@ -128,8 +123,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-9.doe-9@fakemail12.com",
                             Name = "John-9",
                             Surname = "Doe-9"
@@ -137,8 +131,7 @@ namespace CS.User.Infrastructure.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             Email = "john-10.doe-10@fakemail12.com",
                             Name = "John-10",
                             Surname = "Doe-10"

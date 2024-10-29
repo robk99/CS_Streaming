@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CS.Common.Database.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CS.Session.Domain.Sessions
 {
-    public class Session
+    public class Session : AuditMetadata
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

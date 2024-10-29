@@ -4,6 +4,7 @@ using CS.Session.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS.Session.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241029171719_AddAudits")]
+    partial class AddAudits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,8 +63,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 17, 13, 18, 915, DateTimeKind.Local).AddTicks(4920),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 14, 37, 18, 915, DateTimeKind.Local).AddTicks(4920),
@@ -71,8 +73,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 55, 18, 915, DateTimeKind.Local).AddTicks(5024),
                             MediaId = 3,
                             StartTime = new DateTime(2024, 10, 29, 14, 32, 18, 915, DateTimeKind.Local).AddTicks(5024),
@@ -82,8 +83,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 14, 30, 18, 915, DateTimeKind.Local).AddTicks(5042),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 13, 45, 18, 915, DateTimeKind.Local).AddTicks(5042),
@@ -93,8 +93,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 4L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 17, 8, 18, 915, DateTimeKind.Local).AddTicks(5056),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 14, 28, 18, 915, DateTimeKind.Local).AddTicks(5056),
@@ -104,8 +103,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 5L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 29, 18, 915, DateTimeKind.Local).AddTicks(5071),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 14, 34, 18, 915, DateTimeKind.Local).AddTicks(5071),
@@ -115,8 +113,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 6L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 16, 44, 18, 915, DateTimeKind.Local).AddTicks(5086),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 13, 38, 18, 915, DateTimeKind.Local).AddTicks(5086),
@@ -126,8 +123,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 7L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 14, 57, 18, 915, DateTimeKind.Local).AddTicks(5100),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 14, 30, 18, 915, DateTimeKind.Local).AddTicks(5100),
@@ -137,8 +133,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 8L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 14, 52, 18, 915, DateTimeKind.Local).AddTicks(5114),
                             MediaId = 3,
                             StartTime = new DateTime(2024, 10, 29, 13, 25, 18, 915, DateTimeKind.Local).AddTicks(5114),
@@ -148,8 +143,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 9L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 18, 3, 18, 915, DateTimeKind.Local).AddTicks(5127),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 51, 18, 915, DateTimeKind.Local).AddTicks(5127),
@@ -159,8 +153,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 10L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 34, 18, 915, DateTimeKind.Local).AddTicks(5143),
                             MediaId = 3,
                             StartTime = new DateTime(2024, 10, 29, 13, 27, 18, 915, DateTimeKind.Local).AddTicks(5143),
@@ -170,8 +163,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 11L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 14, 58, 18, 915, DateTimeKind.Local).AddTicks(5158),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 13, 24, 18, 915, DateTimeKind.Local).AddTicks(5158),
@@ -181,8 +173,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 12L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 16, 19, 18, 915, DateTimeKind.Local).AddTicks(5173),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 13, 41, 18, 915, DateTimeKind.Local).AddTicks(5173),
@@ -192,8 +183,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 13L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 17, 19, 18, 915, DateTimeKind.Local).AddTicks(5191),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 36, 18, 915, DateTimeKind.Local).AddTicks(5191),
@@ -203,8 +193,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 14L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 16, 55, 18, 915, DateTimeKind.Local).AddTicks(5252),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 30, 18, 915, DateTimeKind.Local).AddTicks(5252),
@@ -214,8 +203,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 15L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 24, 18, 915, DateTimeKind.Local).AddTicks(5272),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 13, 45, 18, 915, DateTimeKind.Local).AddTicks(5272),
@@ -225,8 +213,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 16L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 16, 56, 18, 915, DateTimeKind.Local).AddTicks(5288),
                             MediaId = 3,
                             StartTime = new DateTime(2024, 10, 29, 14, 6, 18, 915, DateTimeKind.Local).AddTicks(5288),
@@ -236,8 +223,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 17L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 17, 26, 18, 915, DateTimeKind.Local).AddTicks(5301),
                             MediaId = 2,
                             StartTime = new DateTime(2024, 10, 29, 14, 18, 18, 915, DateTimeKind.Local).AddTicks(5301),
@@ -247,8 +233,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 18L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 33, 18, 915, DateTimeKind.Local).AddTicks(5317),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 40, 18, 915, DateTimeKind.Local).AddTicks(5317),
@@ -258,8 +243,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 19L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 16, 59, 18, 915, DateTimeKind.Local).AddTicks(5330),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 15, 18, 915, DateTimeKind.Local).AddTicks(5330),
@@ -269,8 +253,7 @@ namespace CS.Session.Infrastructure.Migrations
                         new
                         {
                             Id = 20L,
-                            CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-
+                            
                             EndTime = new DateTime(2024, 10, 29, 15, 17, 18, 915, DateTimeKind.Local).AddTicks(5345),
                             MediaId = 1,
                             StartTime = new DateTime(2024, 10, 29, 14, 40, 18, 915, DateTimeKind.Local).AddTicks(5345),

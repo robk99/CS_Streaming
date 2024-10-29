@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CS.Common.Database.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace CS.Media.Domain.Medias
 {

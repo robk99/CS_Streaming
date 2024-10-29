@@ -1,4 +1,5 @@
-﻿using CS.Session.Domain.Abstractions;
+﻿using CS.Common.Database.EntityFramework.Interceptors;
+using CS.Session.Domain.Abstractions;
 using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Database;
 using CS.Session.Infrastructure.Database.Repositories;
@@ -23,16 +24,9 @@ namespace CS.Session.Infrastructure
         {
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
-            services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("Database"),
-            sqlServerOptionsAction: sqlOptions =>
-            {
-                sqlOptions.EnableRetryOnFailure(
-                maxRetryCount: 10,
-                maxRetryDelay: TimeSpan.FromSeconds(10),
-                errorNumbersToAdd: null);
-            }
-            ));
+            services.AddDbContext<AppDbContext>(
+                options => options.UseSqlServer(configuration.GetConnectionString("Database"))
+            );
 
             services.AddScoped<ISessionRepository, SessionRepository>();
 
