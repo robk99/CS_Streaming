@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureLogging(builder.Configuration);
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers()
      .AddJsonOptions(options =>
@@ -11,7 +13,8 @@ builder.Services.AddControllers()
          options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
      });
 
-WebApplication app = builder.Build();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseCustomExceptionHandlingMiddleware();

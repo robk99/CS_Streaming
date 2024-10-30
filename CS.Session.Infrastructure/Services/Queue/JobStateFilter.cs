@@ -3,38 +3,36 @@ using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Services.Queue.Jobs;
 using Hangfire;
 using Hangfire.States;
+using Serilog;
 
 namespace CS.Session.Infrastructure.Services.Queue
 {
     public class JobStateFilter : IElectStateFilter
     {
         private ISessionStateHandler _sessionStateHandler;
+        private readonly ILogger _logger;
 
-        public JobStateFilter(ISessionStateHandler sessionStateHandler)
+        public JobStateFilter(ISessionStateHandler sessionStateHandler, ILogger logger)
         {
             _sessionStateHandler = sessionStateHandler;
+            _logger = logger;
         }
 
         public void OnStateElection(ElectStateContext context)
         {
             try
             {
-                var jobId = context.BackgroundJob.Job.Args[0] as string;
-                var jobType = context.BackgroundJob.Job.Type;
-
                 if (context.CandidateState is SucceededState) HandleSuccessEvent(context);
                 else if (context.CandidateState is FailedState) HandleFailEvent(context);
 
             }
             catch (InvalidOperationException ex)
             {
-                // TODO: Log
-                Console.WriteLine($"Error processing job state: {ex.Message}");
+                _logger.Error($"Error processing job state: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                _logger.Error($"Unexpected error: {ex.Message}");
             }
         }
 
@@ -48,12 +46,24 @@ namespace CS.Session.Infrastructure.Services.Queue
             switch (jobType.Name)
             {
                 case nameof(UserPingJob):
-                    // TODO: Log
-                    //Console.WriteLine($"JOB DONE {jobId}");
 
-                    string userIP = context.BackgroundJob.Job.Args[1] as string ?? throw new InvalidOperationException("User IP is missing or invalid.");
+                    _logger.Information($"Job done: {jobId}");
 
-                    var resultString = result as string ?? throw new InvalidOperationException("Job return value is missing or invalid.");
+                    var userIP = context.BackgroundJob.Job.Args[1] as string;
+
+                    if (string.IsNullOrEmpty(userIP))
+                    {
+                        _logger.Error("User IP is missing or invalid.");
+                        return;
+                    }
+
+
+                    var resultString = result as string;
+                    if (string.IsNullOrEmpty(resultString))
+                    {
+                        _logger.Error("Job return value is missing or invalid.");
+                        return;
+                    }
 
                     if (resultString == SessionState.CLOSED.ToString())
                     {
@@ -75,8 +85,7 @@ namespace CS.Session.Infrastructure.Services.Queue
             switch (jobType.Name)
             {
                 case nameof(UserPingJob):
-                    // TODO: Log
-                    Console.WriteLine($"JOB FAILED {jobId}");
+                    _logger.Error($"JOB FAILED {jobId}");
                     break;
 
                 default:

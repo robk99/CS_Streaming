@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Serilog;
 
 namespace CS.User.Infrastructure.Utils
 {
@@ -11,27 +12,29 @@ namespace CS.User.Infrastructure.Utils
     {
         public async static Task ApplyMigrationsAndSeed(this WebApplication app)
         {
+            using var scope = app.Services.CreateScope();
+
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            if (logger == null) throw new Exception("Logger not injected on app start!");
+
+            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
             var retryPolicy = Policy.Handle<SqlException>()
-            .WaitAndRetryAsync(10, attempt => TimeSpan.FromSeconds(3), (exception, timeSpan, retryCount, context) =>
-            {
-                Console.WriteLine($"Retry {retryCount} failed to connect to the DB. Retrying in {timeSpan.TotalSeconds} seconds.");
-            });
+                .WaitAndRetryAsync(10, attempt => TimeSpan.FromSeconds(3), (exception, timeSpan, retryCount, context) =>
+                {
+                    logger.Warning($"Retry {retryCount} failed to connect to the DB. Retrying in {timeSpan.TotalSeconds} seconds.");
+                });
 
             await retryPolicy.ExecuteAsync(async () =>
             {
-                using (var scope = app.Services.CreateScope())
+                if (context.Database.GetPendingMigrations().Any())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-                    if (context.Database.GetPendingMigrations().Any())
-                    {
-                        Console.WriteLine("----------------- APPLYING MIGRATIONS -----------------");
-                        context.Database.Migrate();
-                    }
-                    else
-                    {
-                        Console.WriteLine("----------------- NO MIGRATIONS -----------------");
-                    }
+                    logger.Information("----------------- APPLYING MIGRATIONS -----------------");
+                    context.Database.Migrate();
+                }
+                else
+                {
+                    logger.Information("----------------- NO MIGRATIONS -----------------");
                 }
             });
         }

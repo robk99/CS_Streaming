@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureLogging(builder.Configuration);
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers()
      .AddJsonOptions(options =>
@@ -11,9 +13,6 @@ builder.Services.AddControllers()
          options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
      });
 
-// Add services to the container.
-
-builder.Services.AddControllers();
 
 var app = builder.Build();
 

@@ -1,14 +1,17 @@
 ﻿using CS.Media.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace CS.Media.Infrastructure.Middlewares
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        public ExceptionMiddleware(RequestDelegate next)
+        private readonly ILogger _logger;
+        public ExceptionMiddleware(RequestDelegate next, ILogger logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -19,8 +22,7 @@ namespace CS.Media.Infrastructure.Middlewares
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                Console.WriteLine($"\nGUID: {httpContext.Request.Headers["X-Request-Guid"]}\n We encountered an InternalServerError Exception!: {ex.Message}");
+                _logger.Error($"\nGUID: {httpContext.Request.Headers["X-Request-Guid"]}\n We encountered an InternalServerError Exception!: {ex.Message}");
                 await new ResponseExceptionHandler().HandleExceptionAsync(httpContext);
             }
         }

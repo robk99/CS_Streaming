@@ -52,7 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{98D148
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{727AA9AB-1E77-4503-A535-493BE5FE1578}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Common", "CS.Common\CS.Common.csproj", "{5620AB8B-0223-434F-94CC-F422E0B07A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Common", "CS.Common\CS.Common.csproj", "{5620AB8B-0223-434F-94CC-F422E0B07A9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
