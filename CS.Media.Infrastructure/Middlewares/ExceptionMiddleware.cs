@@ -22,7 +22,6 @@ namespace CS.Media.Infrastructure.Middlewares
             }
             catch (Exception ex)
             {
-                // TODO: Log
                 _logger.Error($"\nGUID: {httpContext.Request.Headers["X-Request-Guid"]}\n We encountered an InternalServerError Exception!: {ex.Message}");
                 await new ResponseExceptionHandler().HandleExceptionAsync(httpContext);
             }

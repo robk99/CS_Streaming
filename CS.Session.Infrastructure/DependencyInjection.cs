@@ -14,6 +14,7 @@ using Hangfire.Redis.StackExchange;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using StackExchange.Redis;
 
 namespace CS.Session.Infrastructure
@@ -73,7 +74,7 @@ namespace CS.Session.Infrastructure
                 .UseRecommendedSerializerSettings()
                 .UseRedisStorage(redisMultiplexer)
                 .UseFilter(new JobStateFilter(
-                    services.BuildServiceProvider().GetRequiredService<ISessionStateHandler>()))
+                    services.BuildServiceProvider().GetRequiredService<ISessionStateHandler>(), services.BuildServiceProvider().GetRequiredService<ILogger>()))
                 );
 
             services.AddHangfireServer(x =>

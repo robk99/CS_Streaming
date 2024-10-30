@@ -22,9 +22,6 @@ namespace CS.Session.Infrastructure.Services.Queue
         {
             try
             {
-                var jobId = context.BackgroundJob.Job.Args[0] as string;
-                var jobType = context.BackgroundJob.Job.Type;
-
                 if (context.CandidateState is SucceededState) HandleSuccessEvent(context);
                 else if (context.CandidateState is FailedState) HandleFailEvent(context);
 
@@ -49,12 +46,24 @@ namespace CS.Session.Infrastructure.Services.Queue
             switch (jobType.Name)
             {
                 case nameof(UserPingJob):
-                    // TODO: Log
-                    //Console.WriteLine($"JOB DONE {jobId}");
 
-                    string userIP = context.BackgroundJob.Job.Args[1] as string ?? throw new InvalidOperationException("User IP is missing or invalid.");
+                    _logger.Information($"Job done: {jobId}");
 
-                    var resultString = result as string ?? throw new InvalidOperationException("Job return value is missing or invalid.");
+                    var userIP = context.BackgroundJob.Job.Args[1] as string;
+
+                    if (string.IsNullOrEmpty(userIP))
+                    {
+                        _logger.Error("User IP is missing or invalid.");
+                        return;
+                    }
+
+
+                    var resultString = result as string;
+                    if (string.IsNullOrEmpty(resultString))
+                    {
+                        _logger.Error("Job return value is missing or invalid.");
+                        return;
+                    }
 
                     if (resultString == SessionState.CLOSED.ToString())
                     {
@@ -76,8 +85,7 @@ namespace CS.Session.Infrastructure.Services.Queue
             switch (jobType.Name)
             {
                 case nameof(UserPingJob):
-                    // TODO: Log
-                    Console.WriteLine($"JOB FAILED {jobId}");
+                    _logger.Error($"JOB FAILED {jobId}");
                     break;
 
                 default:
