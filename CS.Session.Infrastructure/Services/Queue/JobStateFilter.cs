@@ -3,16 +3,19 @@ using CS.Session.Infrastructure.Abstractions;
 using CS.Session.Infrastructure.Services.Queue.Jobs;
 using Hangfire;
 using Hangfire.States;
+using Serilog;
 
 namespace CS.Session.Infrastructure.Services.Queue
 {
     public class JobStateFilter : IElectStateFilter
     {
         private ISessionStateHandler _sessionStateHandler;
+        private readonly ILogger _logger;
 
-        public JobStateFilter(ISessionStateHandler sessionStateHandler)
+        public JobStateFilter(ISessionStateHandler sessionStateHandler, ILogger logger)
         {
             _sessionStateHandler = sessionStateHandler;
+            _logger = logger;
         }
 
         public void OnStateElection(ElectStateContext context)
@@ -28,13 +31,11 @@ namespace CS.Session.Infrastructure.Services.Queue
             }
             catch (InvalidOperationException ex)
             {
-                // TODO: Log
-                Console.WriteLine($"Error processing job state: {ex.Message}");
+                _logger.Error($"Error processing job state: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                _logger.Error($"Unexpected error: {ex.Message}");
             }
         }
 

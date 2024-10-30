@@ -11,9 +11,7 @@ builder.Services.AddControllers()
          options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
      });
 
-// Add services to the container.
-
-builder.Services.AddControllers();
+builder.Host.ConfigureLogging(builder.Configuration);
 
 var app = builder.Build();
 
